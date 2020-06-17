@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #time {
+      position: fixed;
+      top: 30%;
+      width: 100%;
+      text-align: center;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<div id="time">
+
+</div>
+
+<body>
+
+</body>
+<script>
+  var year
+  var month
+  var date1
+  function endTime() {
+    var now = new Date()
+    myDate = new Date('2020/' + (now.getMonth() + 1) + '/' + now.getDate() + ' 18:00');
+    year = myDate.getFullYear();
+    month = myDate.getMonth() + 1;
+    date1 = myDate.getDate();
+    if (month < 10) {
+      month = '0' + month;
+    }
+    if (date1 < 10) {
+      date1 = '0' + date1;
+    }
+
+    return year + '/' + month + '/' + date1 + ' ' + '18:00';
+
+
+  }
+  var interval = setInterval(function () {
+    var nowtime = Date.parse(new Date());
+    var end = endTime();
+    var date = new Date(end);
+    var endtime = date.getTime();
+    var leftTime = endtime - nowtime;
+    var leftsecond = parseInt(leftTime / 1000);
+    var day1 = Math.floor(leftsecond / (60 * 60 * 24));
+    var hour = Math.floor((leftsecond - day1 * 24 * 60 * 60) / 3600);
+    var minute = Math.floor((leftsecond - day1 * 24 * 60 * 60 - hour * 3600) / 60);
+    var second = Math.floor(leftsecond - day1 * 24 * 60 * 60 - hour * 3600 - minute * 60);
+    //"距离" + year + "年" + month + "月" 日17时30分+ date1 +  day1 + "天" +
+    var text = "距离下班还有：    " + hour + "小时   " + minute + "分  " + second + "秒"
+    document.getElementById('time').innerText = text
+    if (hour == 0 && minute == 0 && second == 0) {
+      clearInterval(interval)
+      document.getElementById('time').innerText = '下班啦！辛苦了'
+      alert('下班啦')
+    }
+
+  }, 1000);
+</script>
+
+</html>
